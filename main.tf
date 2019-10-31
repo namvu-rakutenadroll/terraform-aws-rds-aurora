@@ -56,6 +56,8 @@ resource "aws_rds_cluster" "this" {
 
   enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
 
+  iam_roles                       = var.iam_roles
+
   dynamic "scaling_configuration" {
     for_each = length(keys(var.scaling_configuration)) == 0 ? [] : [var.scaling_configuration]
 
@@ -90,7 +92,6 @@ resource "aws_rds_cluster_instance" "this" {
   promotion_tier                  = count.index + 1
   performance_insights_enabled    = var.performance_insights_enabled
   performance_insights_kms_key_id = var.performance_insights_kms_key_id
-  iam_roles                       = var.iam_roles
   tags                            = var.tags
 }
 
